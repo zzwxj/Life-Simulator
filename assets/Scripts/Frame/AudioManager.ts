@@ -81,20 +81,21 @@ export class AudioManager {
         Button.prototype["_onTouchEnded"] = function (event) {
 
             if (this.interactable && this.enabledInHierarchy) {
-                if (this.node.getComponent(AudioId) && this.node.getComponent(AudioId).audioId != 0) {
-
+                if (this.node.getComponent(AudioId)) {
+                    const audioId = this.node.getComponent(AudioId).audioId;
+                    AudioManager.instance.playSound(audioId);
                 } else {
                     // 播放自己的按钮音效
-                    // AudioManager.instance.playSound(Constants.audioSource.CommonClick);
-                    if (this instanceof Toggle) {
-                        // 播放自己的按钮音效
-                        AudioManager.instance.playSound(101);
-
-                    }
-                    else {
-                        // 播放自己的按钮音效
-                        AudioManager.instance.playSound(101);
-                    }
+                    //AudioManager.instance.playSound(Constants.audioSource.CommonClick);
+                    AudioManager.instance.playSound(101);
+                    // if (this instanceof Toggle) {
+                    //     // 播放自己的按钮音效
+                    //     AudioManager.instance.playSound(101);
+                    // }
+                    // else {
+                    //     // 播放自己的按钮音效
+                    //     AudioManager.instance.playSound(101);
+                    // }
                 }
             }
 
