@@ -1,0 +1,14 @@
+[
+  {
+    "Id": 1,
+    "type": 1,
+    "desc": "主题曲",
+    "resource": "MainTheme"
+  },
+  {
+    "Id": 2,
+    "type": 1,
+    "desc": "战斗",
+    "resource": "BattleTheme"
+  }
+]

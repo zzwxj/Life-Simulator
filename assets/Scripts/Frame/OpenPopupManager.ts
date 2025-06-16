@@ -1,21 +1,12 @@
 import { instantiate, Node, Prefab, v3, Vec3 } from "cc";
 import { Constants } from "../Constants";
-import { SelectObj } from "../Game/Data/SkillUpgradeData";
-import { ItemCfg } from "../Model/ItemModel";
 import { Toast } from "../Popup/Common/Toast";
 import GameController from "./GameController";
 import { PopupManager, PopupOptions } from "./PopupManager";
 import { ResourcesUtil } from "./ResourcesUtil";
-import { RewardItemObj } from "../Game/Reward/RewardItem";
-import { ReadinessObj, RewardObj } from "../Game/Data/ItemData";
 import { Util } from "./Util";
-import { MaskViewOption } from "../Popup/Game/GameMaskView";
 import { EventListener } from "./EventListener";
 import { GameEvent } from "../Game/Event/GameEvent";
-import { BagType } from "../Game/Data/PlayerData";
-import { GameNewFunctionPopup } from "../Popup/Game/GameNewFunctionPopup";
-import { FriendData, FriendObj } from "../Game/Data/FriendData";
-import { BoardItemBase } from "../Game/Board/BoardItemBase";
 
 export class OpenPopupManager {
     public TopLayer: Node = null; //弹窗上层
@@ -98,14 +89,6 @@ export class OpenPopupManager {
         PopupManager.instance.show(options,[cbk]);
     }
 
-    /* 显示武器详情 */
-    showItemDetailPopup(itemCfg: ItemCfg) {
-        let options = new PopupOptions();
-        options.path = Constants.PopupUI.GameItemInfoPopup;
-        options.parent = this.TopLayer;
-        PopupManager.instance.show(options,[itemCfg]);
-    }
-
     /* 侧边栏奖励界面 */
     showSidebarAwardPopup() {
         let options = new PopupOptions();
@@ -152,14 +135,6 @@ export class OpenPopupManager {
     }
 
     /* 显示开启宝箱结果界面 */
-    showGachaResultPopup(rewardList: RewardObj[],chestType: number,cbk:Function) {
-        let options = new PopupOptions();
-        options.path = Constants.PopupUI.GameGachaResultPopup;
-        options.parent = this.TopLayer;
-        PopupManager.instance.show(options,[rewardList,chestType,cbk]);
-    }
-
-    /* 显示开启宝箱结果界面 */
     showGachaLevelInfoPopup(level: number) {
         let options = new PopupOptions();
         options.path = Constants.PopupUI.GameGachaLevelInfoPopup;
@@ -173,14 +148,6 @@ export class OpenPopupManager {
         options.path = Constants.PopupUI.GameGachaLevelUpPopup;
         options.parent = this.TopLayer;
         PopupManager.instance.show(options,[level]);
-    }
-
-    /* 显示新功能开启界面 */
-    showNewFunctionPopup(action: (self: GameNewFunctionPopup) => void) {
-        let options = new PopupOptions();
-        options.path = Constants.PopupUI.GameNewFunctionPopup;
-        options.parent = this.TopLayer;
-        PopupManager.instance.show(options,[action]);
     }
 
     showLibaoPopup(page:number=0){
@@ -204,14 +171,6 @@ export class OpenPopupManager {
         options.parent = this.TopLayer;
         PopupManager.instance.show(options, [checkCallback]);
     }
-
-    // /* 显示累计奖励界面 */
-    // showMilesRewardPopup(checkCallback: () => void) {
-    //     let options = new PopupOptions();
-    //     options.path = Constants.PopupUI.MilesRewardPopup;
-    //     options.parent = this.TopLayer;
-    //     PopupManager.instance.show(options, [checkCallback]);
-    // }
 
     /* 显示每日任务界面 */
     showTaskDailyRewardPopup(checkCallback: () => void) {
@@ -293,18 +252,6 @@ export class OpenPopupManager {
         PopupManager.instance.show(options,[awardList,cbk]);
     }
 
-    /* 显示商城界面 */
-    showShopPopup(shineCode: BagType) {
-        let options = new PopupOptions();
-        options.path = Constants.PopupUI.GameShopPopup;
-        options.parent = this.MidLayer;
-        options.closeCur = true;
-        PopupManager.instance.show(options, [shineCode]);
-        this.addHidePopup(options.path);
-
-        EventListener.emit(GameEvent.UPDATE_MAIN_BOTTOM, 0);
-    }
-
     /* 显示基本属性养成界面 */
     showHeroNaturePopup(){
         let options = new PopupOptions();
@@ -365,23 +312,9 @@ export class OpenPopupManager {
         EventListener.emit(GameEvent.UPDATE_MAIN_BOTTOM, 4);
     }
 
-    showGameMaskPopup(maskOption:MaskViewOption){
-        let options = new PopupOptions;
-        options.path = Constants.PopupUI.GameMaskView;
-        options.parent = this.TopLayer;
-        PopupManager.instance.show(options,[maskOption]);
-    }
-
     setToplayerNode(node:Node,oldNode:Node){
         node.parent = this.TopLayer;
         node.position = Util.calculateASpaceToBSpacePos(oldNode,this.TopLayer,v3(0,0,0));
-    }
-
-    showFriendInfoPopup(obj:FriendObj){
-        let options = new PopupOptions();
-        options.path = Constants.PopupUI.GameFriendInfoPopup;
-        options.parent = this.TopLayer;
-        PopupManager.instance.show(options,[obj]);
     }
 
     /* 显示设置界面 */
@@ -401,15 +334,6 @@ export class OpenPopupManager {
         options.path = Constants.PopupUI.RedeemCodePopup;
         options.parent = this.TopLayer;
         PopupManager.instance.show(options);
-    }
-
-    /* 显示游戏提示界面 */
-    showGameFriendGachaTipView(list: number[],callback: Function) {
-        let options = new PopupOptions();
-        options.path = Constants.PopupUI.GameFriendGachaTipView;
-        options.parent = this.TopLayer;
-        FriendData.instance.getNewFriend(list);
-        PopupManager.instance.show(options,[list,callback]);
     }
 
     /* 显示游戏提示界面 */
@@ -551,13 +475,6 @@ export class OpenPopupManager {
         options.path = Constants.PopupUI.BoardAwardPopup;
         options.parent = this.BottomLayer;
         PopupManager.instance.show(options,[type,typeId,count]);
-    }
-
-    showBoardEventInfoTip(boardBase: BoardItemBase){
-        let options = new PopupOptions();
-        options.path = Constants.PopupUI.BoardEventInfoTip;
-        options.parent = this.TopLayer;
-        PopupManager.instance.show(options,[boardBase]);
     }
 
     showBoardPasswordPopup(){
