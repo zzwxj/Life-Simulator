@@ -1,6 +1,6 @@
 // PausableUpdate.ts
 import { _decorator, Component } from 'cc';
-import { PauseManager } from '../PauseManger';
+import { PauseManager } from '../PauseManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('PausableUpdate')
